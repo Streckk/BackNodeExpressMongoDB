@@ -20,7 +20,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParse.json());
 app.use(bodyParse.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/public'));
 
 //En este apartado si quieres conectar MongoDBJ
 //Recuerda debes de especificar tu usuario y tu contraseña
@@ -97,3 +96,36 @@ app.get('/delete/:id',(req, res) =>{
     
 
 });
+
+// let n = 13;
+// let a = 0;
+// let b = 1;
+// let siguiente;
+
+// if (n === 1) {
+//     console.log(a);
+// } else {
+//     console.log(a);
+//     console.log(b);
+//     for (let i = 3; i <= n; i++) {
+//         siguiente = a + b;
+//         console.log(siguiente);
+//         a = b;
+//         b = siguiente;
+//     }
+// }
+
+
+
+// const num = 5;
+
+// // Inicializar el factorial en 1
+// let factorial = 1;
+
+// // Calcular el factorial utilizando un bucle for
+// for (let i = 1; i <= num; i++) {
+//     factorial *= i;
+// }
+
+// // Mostrar el resultado en la consola
+// console.log(El factorial de ${num} es ${factorial});
