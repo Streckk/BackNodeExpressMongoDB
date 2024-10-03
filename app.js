@@ -8,23 +8,13 @@ const cors = require('cors');
 
 const app = express();
 
-/**
- * Recuerda que para utilziar este proyecto es necesario tener instalado nodejs
- * Despues inicializar tu proyecto con npm init (Esto para cargar las dependencias de Nodejs y trabajar con el)
- * La configuración deja la por default
- * Despues instalamos las dependencias de express, mongose, body-parser (npm i express mongoose body-parser)
- * Por ultimo yo en lo personal te recomiendo instalar nodemon para ver los cambios como en hot reload (npm i nodemon)
- * 
- */
+
 
 app.use(cors());
 app.use(bodyParse.json());
 app.use(bodyParse.urlencoded({extended: true}));
 
-//En este apartado si quieres conectar MongoDBJ
-//Recuerda debes de especificar tu usuario y tu contraseña
-//En este caso mi usuario es Streckk y mi contraseña es contrasena
-//Seguido de el puerto por default de MongoDB y la base de datos a la que se va establecer conexión
+
 mongoose.connect('mongodb://Streckk:contrasena@localhost:27017/todo',);
 
 const connection = mongoose.connection;
@@ -36,12 +26,12 @@ connection.once('open', () => {
 
 connection.on('error', (err) => { console.log('Error a la conexión a la BD', err) });
 
-//Modelo para poder realizar operaciones
+
 const Todo = mongoose.model('Todo',{text: String, completed: Boolean});
 
 app.listen(port, () => { console.log('Servidor levantado!') });
 
-// Este endpoint es donde vamos a postear la información de nuestro input recibido
+
 app.post('/add',(req, res) =>{
     const todo = new Todo({text: req.body.text, completed: false});
     todo.save().then(doc => { 
@@ -53,7 +43,7 @@ app.post('/add',(req, res) =>{
     });
 });
 
-//Este endpoint es para consultar los post que hemos realziado.
+
 
 app.get('/getall',(req, res) =>{
     Todo.find({},'text completed')
@@ -67,10 +57,10 @@ app.get('/getall',(req, res) =>{
 
 });
 
-//Este endpoint nos servira para poder actualizar los todos que ya tenemos creados.
+
 app.get('/complete/:id/:status', (req, res) =>{
    const id = req.params.id;
-   const status = req.params.status == 'true'; //Lo que realizamos aquí es ver si lo que se obteniene es igual a verdadero regresa un valor booleano
+   const status = req.params.status == 'true'; 
     Todo.findByIdAndUpdate({_id: id},{$set: {completed: status}})
     .then((doc) => {
         res.json({response: 'success'});
@@ -81,7 +71,7 @@ app.get('/complete/:id/:status', (req, res) =>{
     });
 });
 
-//Este endpoint es que se va a encargar de eliminar nuestros Todos.
+
 
 app.get('/delete/:id',(req, res) =>{
     const id = req.params.id;
@@ -96,36 +86,3 @@ app.get('/delete/:id',(req, res) =>{
     
 
 });
-
-// let n = 13;
-// let a = 0;
-// let b = 1;
-// let siguiente;
-
-// if (n === 1) {
-//     console.log(a);
-// } else {
-//     console.log(a);
-//     console.log(b);
-//     for (let i = 3; i <= n; i++) {
-//         siguiente = a + b;
-//         console.log(siguiente);
-//         a = b;
-//         b = siguiente;
-//     }
-// }
-
-
-
-// const num = 5;
-
-// // Inicializar el factorial en 1
-// let factorial = 1;
-
-// // Calcular el factorial utilizando un bucle for
-// for (let i = 1; i <= num; i++) {
-//     factorial *= i;
-// }
-
-// // Mostrar el resultado en la consola
-// console.log(El factorial de ${num} es ${factorial});
